@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: built-files
-          path: _build/example
+          path: _build/tests  # Убедитесь, что путь совпадает с расположением исполняемого файла
 
   Build-Project-Windows:
     name: Build Project on Windows
@@ -63,5 +63,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: built-files
-          path: _build\example
+          path: _build/tests.exe  # Убедитесь, что путь совпадает с расположением исполняемого файла
           if-no-files-found: warn
