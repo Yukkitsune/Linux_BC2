@@ -21,6 +21,9 @@ jobs:
       - name: Run tests
         run: ./_build/tests
 
+      - name: List build directory
+        run: ls -la _build
+
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -53,8 +56,12 @@ jobs:
       - name: Run tests
         run: .\_build\tests.exe
 
+      - name: List build directory
+        run: dir _build
+
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: built-files
           path: _build\example
+          if-no-files-found: warn
