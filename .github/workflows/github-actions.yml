@@ -17,6 +17,7 @@ jobs:
         run: |
           cmake -H. -B_build
           cmake --build _build
+
       - name: Run tests
         run: ./_build/tests
 
@@ -41,6 +42,7 @@ jobs:
           Set-ExecutionPolicy Bypass -Scope Process -Force; `
           [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
           iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
       - name: Install CMake
         run: choco install cmake -y
 
@@ -50,15 +52,26 @@ jobs:
           cd _build
           cmake ..
           cmake --build .
-      - name: Run tests
-        run: .\_build\tests.exe
 
-      - name: List build directory
+      - name: List build directory before running tests
+        run: dir _build
+
+      - name: Run tests
+        run: |
+          cd _build
+          if (Test-Path tests.exe) {
+            .\tests.exe
+          } else {
+            echo "tests.exe not found"
+            exit 1
+          }
+
+      - name: List build directory after running tests
         run: dir _build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: built-files
-          path: _build/tests.exe  # Убедитесь, что путь совпадает с расположением исполняемого файла
+          path: _build\tests.exe
           if-no-files-found: warn
