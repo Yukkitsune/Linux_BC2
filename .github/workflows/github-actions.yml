@@ -17,7 +17,6 @@ jobs:
         run: |
           cmake -H. -B_build
           cmake --build _build
-
       - name: Run tests
         run: ./_build/tests
 
@@ -42,7 +41,6 @@ jobs:
           Set-ExecutionPolicy Bypass -Scope Process -Force; `
           [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
           iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-
       - name: Install CMake
         run: choco install cmake -y
 
@@ -52,7 +50,6 @@ jobs:
           cd _build
           cmake ..
           cmake --build .
-
       - name: Run tests
         run: .\_build\tests.exe
 
