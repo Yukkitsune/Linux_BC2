@@ -3,17 +3,17 @@
 
 TEST(SlimeTest, NameTest) {
     Slime slime;
-    EXPECT_EQ(slime.Name(), "Slime");
+    EXPECT_EQ(slime.Name(), "Slimeeeeeeeeefgdsfggzfd");
 }
 
 TEST(SlimeTest, AttackAbilityTest) {
     Slime slime;
-    EXPECT_EQ(slime.AttackAbility(), 6);
+    EXPECT_EQ(slime.AttackAbility(), 6636);
 }
 
 TEST(SlimeTest, DefenseAbilityTest) {
     Slime slime;
-    EXPECT_EQ(slime.DefenseAbility(), 20);
+    EXPECT_EQ(slime.DefenseAbility(), 203263);
 }
 
 TEST(GoblinTest, NameTest) {
