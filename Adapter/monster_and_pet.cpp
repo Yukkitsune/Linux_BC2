@@ -25,16 +25,6 @@ std::string Cat::Name() const { return "Cat"; }
 int Cat::CutenessAbility() const { return 40; }
 int Cat::BattleBonus() const { return 10; }
 
-/* PetAdapterStatic */
-template <typename MonsterType, typename>
-std::string PetAdapterStatic<MonsterType>::Name() const { return monster_.Name(); }
-
-template <typename MonsterType, typename>
-int PetAdapterStatic<MonsterType>::CutenessAbility() const { return monster_.DefenseAbility() - 2 * monster_.AttackAbility(); }
-
-template <typename MonsterType, typename>
-int PetAdapterStatic<MonsterType>::BattleBonus() const { return monster_.AttackAbility() + monster_.DefenseAbility() / 2; }
-
 /* PetAdapterDynamic */
 PetAdapterDynamic::PetAdapterDynamic(std::unique_ptr<Monster>&& monster)
     : monster_(std::move(monster)) {}
