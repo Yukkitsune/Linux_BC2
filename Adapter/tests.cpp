@@ -8,12 +8,12 @@ TEST(SlimeTest, NameTest) {
 
 TEST(SlimeTest, AttackAbilityTest) {
     Slime slime;
-    EXPECT_EQ(slime.AttackAbility(), 6355);
+    EXPECT_EQ(slime.AttackAbility(), 6);
 }
 
 TEST(SlimeTest, DefenseAbilityTest) {
     Slime slime;
-    EXPECT_EQ(slime.DefenseAbility(), 204325);
+    EXPECT_EQ(slime.DefenseAbility(), 20);
 }
 
 TEST(GoblinTest, NameTest) {
