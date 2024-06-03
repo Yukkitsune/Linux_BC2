@@ -25,19 +25,68 @@ std::string Cat::Name() const { return "Cat"; }
 int Cat::CutenessAbility() const { return 40; }
 int Cat::BattleBonus() const { return 10; }
 
+/* PetAdapterStatic */
+template <typename MonsterType, typename>
+std::string PetAdapterStatic<MonsterType>::Name() const
+{
+    return monster_.Name();
+}
+
+template <typename MonsterType, typename>
+int PetAdapterStatic<MonsterType>::CutenessAbility() const
+{
+    return monster_.DefenseAbility() - 2 * monster_.AttackAbility();
+}
+
+template <typename MonsterType, typename>
+int PetAdapterStatic<MonsterType>::BattleBonus() const
+{
+    return monster_.AttackAbility() + monster_.DefenseAbility() / 2;
+}
+
 /* PetAdapterDynamic */
 PetAdapterDynamic::PetAdapterDynamic(std::unique_ptr<Monster>&& monster)
     : monster_(std::move(monster)) {}
 
-std::unique_ptr<Monster> PetAdapterDynamic::ChangeMonster(std::unique_ptr<Monster>&& monster) {
+std::unique_ptr<Monster> PetAdapterDynamic::ChangeMonster(std::unique_ptr<Monster>&& monster)
+{
     std::unique_ptr<Monster> returnedMonster = std::move(monster_);
     monster_ = std::move(monster); 
     return returnedMonster;
 }
 
-std::string PetAdapterDynamic::Name() const { return monster_->Name(); }
-int PetAdapterDynamic::CutenessAbility() const { return monster_->DefenseAbility() - 2 * monster_->AttackAbility(); }
-int PetAdapterDynamic::BattleBonus() const { return monster_->AttackAbility() + monster_->DefenseAbility() / 2; }
+std::string PetAdapterDynamic::Name() const
+{
+    return monster_->Name();
+}
+
+int PetAdapterDynamic::CutenessAbility() const
+{
+    return monster_->DefenseAbility() - 2 * monster_->AttackAbility();
+}
+
+int PetAdapterDynamic::BattleBonus() const
+{
+    return monster_->AttackAbility() + monster_->DefenseAbility() / 2;
+}
+
+void PrintMonster(Monster const& monster)
+{
+    std::cout << "---- Infomation ----" << std::endl;
+    std::cout << "Name             : " << monster.Name() << std::endl;
+    std::cout << "Attack Ability   : " << monster.AttackAbility() << std::endl;
+    std::cout << "Defense Ability  : " << monster.DefenseAbility() << std::endl;
+    std::cout << "--------------------" << std::endl;
+}
+
+void PrintPet(Pet const& pet)
+{
+    std::cout << "---- Infomation ----" << std::endl;
+    std::cout << "Name             : " << pet.Name() << std::endl;
+    std::cout << "Cuteness Ability : " << pet.CutenessAbility() << std::endl;
+    std::cout << "Battle Bonus     : " << pet.BattleBonus() << std::endl;
+    std::cout << "--------------------" << std::endl;
+}
 
 /* Explicit template instantiation */
 template class PetAdapterStatic<Slime>;
