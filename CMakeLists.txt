@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(MonsterPet)
 
 include_directories(Adapter)
-add_executable(monster Adapter/monster_and_pet.cpp)
+
+add_executable(monster main.cpp Adapter/monster_and_pet.cpp)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -19,7 +20,7 @@ FetchContent_MakeAvailable(googletest)
 target_compile_options(gtest PRIVATE -Wno-error=maybe-uninitialized)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=maybe-uninitialized")
 
-add_executable(tests Adapter/tests.cpp)
+add_executable(tests Adapter/tests.cpp Adapter/monster_and_pet.cpp)
 target_link_libraries(tests gtest_main)
 
 include(GoogleTest)
