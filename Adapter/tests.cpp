@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "monster_and_pet.cpp"
+#include "monster_and_pet.h"
 
 TEST(SlimeTest, NameTest) {
     Slime slime;
