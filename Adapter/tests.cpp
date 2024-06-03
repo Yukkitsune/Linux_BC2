@@ -3,7 +3,7 @@
 
 TEST(SlimeTest, NameTest) {
     Slime slime;
-    EXPECT_EQ(slime.Name(), "Slime");
+    EXPECT_EQ(slime.Name(), "Slimeорлор");
 }
 
 TEST(SlimeTest, AttackAbilityTest) {
