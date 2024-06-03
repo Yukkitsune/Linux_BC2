@@ -7,8 +7,7 @@
 #include <type_traits>
 
 /* 태초에 Monster들이 존재했다.. */
-class Monster
-{
+class Monster {
 public:
     virtual ~Monster() = default;
     virtual std::string Name() const = 0;
@@ -16,24 +15,21 @@ public:
     virtual int DefenseAbility() const = 0;
 };
 
-class Slime : public Monster
-{
+class Slime : public Monster {
 public:
     std::string Name() const override;
     int AttackAbility() const override;
     int DefenseAbility() const override;
 };
 
-class Goblin : public Monster
-{
+class Goblin : public Monster {
 public:
     std::string Name() const override;
     int AttackAbility() const override;
     int DefenseAbility() const override;
 };
 
-class Dragon : public Monster
-{
+class Dragon : public Monster {
 public:
     std::string Name() const override;
     int AttackAbility() const override;
@@ -41,8 +37,7 @@ public:
 };
 
 /* 그리고 태초에 Pet들이 존재했다.. */
-class Pet
-{
+class Pet {
 public:
     virtual ~Pet() = default;
     virtual std::string Name() const = 0;
@@ -50,16 +45,14 @@ public:
     virtual int BattleBonus() const = 0;
 };
 
-class Puppy : public Pet
-{
+class Puppy : public Pet {
 public:
     std::string Name() const override;
     int CutenessAbility() const override;
     int BattleBonus() const override;
 };
 
-class Cat : public Pet
-{
+class Cat : public Pet {
 public:
     std::string Name() const override;
     int CutenessAbility() const override;
@@ -68,8 +61,7 @@ public:
 
 /* Monster를 정적으로(compile-time) Pet의 일부로서 만들고 싶은 경우 */
 template <typename MonsterType, typename = std::enable_if_t<std::is_base_of<Monster, MonsterType>::value>>
-class PetAdapterStatic : public Pet
-{
+class PetAdapterStatic : public Pet {
 public:
     std::string Name() const override;
     int CutenessAbility() const override;
@@ -80,8 +72,7 @@ private:
 };
 
 /* Monster를 동적으로(run-time) Pet의 일부로서 만들고 싶은 경우 */
-class PetAdapterDynamic : public Pet
-{
+class PetAdapterDynamic : public Pet {
 public:
     explicit PetAdapterDynamic(std::unique_ptr<Monster>&& monster);
     std::unique_ptr<Monster> ChangeMonster(std::unique_ptr<Monster>&& monster);
