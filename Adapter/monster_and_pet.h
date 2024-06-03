@@ -71,6 +71,15 @@ private:
     MonsterType monster_;
 };
 
+template <typename MonsterType, typename>
+std::string PetAdapterStatic<MonsterType>::Name() const { return monster_.Name(); }
+
+template <typename MonsterType, typename>
+int PetAdapterStatic<MonsterType>::CutenessAbility() const { return monster_.DefenseAbility() - 2 * monster_.AttackAbility(); }
+
+template <typename MonsterType, typename>
+int PetAdapterStatic<MonsterType>::BattleBonus() const { return monster_.AttackAbility() + monster_.DefenseAbility() / 2; }
+
 /* Monster를 동적으로(run-time) Pet의 일부로서 만들고 싶은 경우 */
 class PetAdapterDynamic : public Pet {
 public:
