@@ -91,8 +91,3 @@ TEST(PetAdapterDynamicTest, ChangeMonster) {
     EXPECT_EQ(returnedMonster->AttackAbility(), 30);
     EXPECT_EQ(returnedMonster->DefenseAbility(), 10);
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
