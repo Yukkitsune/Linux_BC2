@@ -7,7 +7,8 @@
 #include <type_traits>
 
 /* 태초에 Monster들이 존재했다.. */
-class Monster {
+class Monster
+{
 public:
     virtual ~Monster() = default;
     virtual std::string Name() const = 0;
@@ -15,21 +16,24 @@ public:
     virtual int DefenseAbility() const = 0;
 };
 
-class Slime : public Monster {
+class Slime : public Monster
+{
 public:
     std::string Name() const override;
     int AttackAbility() const override;
     int DefenseAbility() const override;
 };
 
-class Goblin : public Monster {
+class Goblin : public Monster
+{
 public:
     std::string Name() const override;
     int AttackAbility() const override;
     int DefenseAbility() const override;
 };
 
-class Dragon : public Monster {
+class Dragon : public Monster
+{
 public:
     std::string Name() const override;
     int AttackAbility() const override;
@@ -37,7 +41,8 @@ public:
 };
 
 /* 그리고 태초에 Pet들이 존재했다.. */
-class Pet {
+class Pet
+{
 public:
     virtual ~Pet() = default;
     virtual std::string Name() const = 0;
@@ -45,23 +50,28 @@ public:
     virtual int BattleBonus() const = 0;
 };
 
-class Puppy : public Pet {
+class Puppy : public Pet
+{
 public:
     std::string Name() const override;
     int CutenessAbility() const override;
     int BattleBonus() const override;
 };
 
-class Cat : public Pet {
+class Cat : public Pet
+{
 public:
     std::string Name() const override;
     int CutenessAbility() const override;
     int BattleBonus() const override;
 };
 
-/* Monster를 정적으로(compile-time) Pet의 일부로서 만들고 싶은 경우 */
+/* Monster를 정적으로(compile-time) Pet의 일부로서 만들고 싶은 경우, 
+    template을 활용하면, overhead를 최소화할 수 있다. 단, 유연성은 떨어진다.
+*/
 template <typename MonsterType, typename = std::enable_if_t<std::is_base_of<Monster, MonsterType>::value>>
-class PetAdapterStatic : public Pet {
+class PetAdapterStatic : public Pet
+{
 public:
     std::string Name() const override;
     int CutenessAbility() const override;
@@ -71,25 +81,16 @@ private:
     MonsterType monster_;
 };
 
-template <typename MonsterType, typename>
-std::string PetAdapterStatic<MonsterType>::Name() const {
-    return monster_.Name();
-}
-
-template <typename MonsterType, typename>
-int PetAdapterStatic<MonsterType>::CutenessAbility() const {
-    return monster_.DefenseAbility() - 2 * monster_.AttackAbility();
-}
-
-template <typename MonsterType, typename>
-int PetAdapterStatic<MonsterType>::BattleBonus() const {
-    return monster_.AttackAbility() + monster_.DefenseAbility() / 2;
-}
-
-/* Monster를 동적으로(run-time) Pet의 일부로서 만들고 싶은 경우 */
-class PetAdapterDynamic : public Pet {
+/* Monster를 동적으로(run-time) Pet의 일부로서 만들고 싶은 경우,
+    Monster 클래스 계통의 base class로서 서브타이핑을 하면 큰 유연성을 얻을 수 있다.
+    pet에 해당하는 monster를 바꾸거나 pet을 다시 monster로 복귀시키는 등의 동적인 작업이 가능해진다.
+    단, static한 버전(template을 이용한 버전)에 비해 overhead가 더 존재한다.
+*/
+class PetAdapterDynamic : public Pet
+{
 public:
     explicit PetAdapterDynamic(std::unique_ptr<Monster>&& monster);
+
     std::unique_ptr<Monster> ChangeMonster(std::unique_ptr<Monster>&& monster);
 
     std::string Name() const override;
